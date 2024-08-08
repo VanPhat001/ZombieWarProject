@@ -4,6 +4,9 @@ public class PlayerMoverment : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 4f;
     private PlayerManager _playerManager;
+    private Vector2 _direction;
+    private bool _canMove = false;
+    
 
     void Start()
     {
@@ -12,21 +15,36 @@ public class PlayerMoverment : MonoBehaviour
 
     void Update()
     {
+        _direction = InputManager.Singleton.JoystickDirection;
+
         Move();
+    }
+
+    void LateUpdate()
+    {
+        if (_playerManager.Shoot.DetectEnemy)
+        {
+            return;
+        }
+
+        if (!_canMove)
+        {
+            return;
+        }
+
+        RotateModelFollowJoystick(_direction);
     }
 
     void Move()
     {
-        var direction = InputManager.Singleton.JoystickDirection;
-        var canMove = direction != Vector2.zero;
-        if (canMove)
+        _canMove = _direction != Vector2.zero;
+        if (_canMove)
         {
-            var velocity = Vector3.forward * direction.y + Vector3.right * direction.x;
+            var velocity = Vector3.forward * _direction.y + Vector3.right * _direction.x;
             _playerManager.Rigid.velocity = velocity * _moveSpeed;
-            RotateModelFollowJoystick(direction);
         }
 
-        _playerManager.Anim.SetBool("run", canMove);
+        _playerManager.Anim.SetBool("run", _canMove);
     }
 
     void RotateModelFollowJoystick(Vector2 joystickDirection)
