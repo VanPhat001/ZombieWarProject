@@ -1,6 +1,4 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -31,10 +29,10 @@ public class PlayerShoot : MonoBehaviour
             DetectEnemy = false;
             return;
         }
-        
+
         DetectEnemy = true;
         _playerManager.Model.rotation = enemy.transform.rotation;
-        _playerManager.Model.Rotate(0, 180, 0);
+        _playerManager.Model.Rotate(0, 165, 0);
 
         if (!CanShoot())
         {
@@ -62,6 +60,12 @@ public class PlayerShoot : MonoBehaviour
         Collider value = null;
         foreach (var collider in colliders)
         {
+            // Debug.Log(collider.transform.name);
+            if (!collider.transform.parent.TryGetComponent<IAliveable>(out var comp) || !comp.IsAlive())
+            {
+                continue;
+            }
+
             var d = Vector3.Distance(this.transform.position, collider.transform.position);
             if (minRange > d)
             {
@@ -70,13 +74,13 @@ public class PlayerShoot : MonoBehaviour
             }
         }
 
-        return value.gameObject;
+        return value?.gameObject;
     }
 
     void OnDrawGizmos()
     {
         var color = Color.yellow;
-        color.a = .3f;
+        color.a = .13f;
         Gizmos.color = color;
 
         Gizmos.DrawSphere(this.transform.position, _detectRange);

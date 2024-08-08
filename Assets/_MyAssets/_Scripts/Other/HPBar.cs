@@ -10,12 +10,17 @@ public class HPBar : MonoBehaviour
     [SerializeField] private Slider _effectSlider;
     [SerializeField] private float _speed = 1f;
     [SerializeField] private float _maxHP;
+    [SerializeField] private bool _leftToRight = true;
 
     public float HP => _mainSlider.value;
 
 
     void Start()
     {
+        var sliderDirection = _leftToRight ? Slider.Direction.LeftToRight : Slider.Direction.RightToLeft;
+        _mainSlider.direction = _effectSlider.direction = sliderDirection;
+        
+
         // ResetHP();
         // StartCoroutine(test());
         // IEnumerator test()

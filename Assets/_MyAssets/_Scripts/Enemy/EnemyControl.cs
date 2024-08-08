@@ -4,19 +4,25 @@ using UnityEngine.AI;
 
 public class EnemyControl : MonoBehaviour
 {
-    private NavMeshAgent _agent;
-    private EnemyManager _enemyManager;
+    [SerializeField] private NavMeshAgent _agent;
+    public NavMeshAgent Agent => _agent;
+
+    [SerializeField] private EnemyManager _enemyManager;
     private float _timer = 0;
     private float _attackRate = 2.5f;
     private Coroutine _coroutine = null;
 
 
+    void OnEnable()
+    {
+        Agent.isStopped = false;
+        _enemyManager.Action.SetWalk();
+    }
+
+
     private void Start()
     {
-        _enemyManager = this.GetComponentInParent<EnemyManager>();
-        _agent = this.GetComponentInParent<NavMeshAgent>();
-        // _agent.isStopped = false;
-        _enemyManager.Action.SetWalk();
+
     }
 
 

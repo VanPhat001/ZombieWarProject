@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class PoolItem
+public class PoolItem<T>
 {
-    public string Name;
+    public T Name;
     public GameObject Prefab;
 }
 
 
-public class Pool : MonoBehaviour
+public abstract class Pool<T> : MonoBehaviour
 {
-    [SerializeField] private List<PoolItem> _poolItemList;
+    [SerializeField] private List<PoolItem<T>> _poolItemList;
     private List<GameObject> _pool = new();
 
+    public GameObject Get(T itemName, Transform parent = null, Action<GameObject> callback = null)
+    {
+        return Get(itemName.ToString(), parent, callback);
+    }
 
-    public GameObject Get(string itemName, Transform parent = null)
+    public GameObject Get(string itemName, Transform parent = null, Action<GameObject> callback = null)
     {
         var go = FindInPool(itemName);
 
@@ -27,11 +31,13 @@ public class Pool : MonoBehaviour
         else
         {
             go = CreateNewGO(itemName);
+            go.name = itemName;
         }
 
+        callback?.Invoke(go);
 
-        go.SetActive(true);
         go.transform.SetParent(parent);
+        go.SetActive(true);
         return go;
     }
 
@@ -46,14 +52,16 @@ public class Pool : MonoBehaviour
 
     private GameObject CreateNewGO(string itemName)
     {
-        var poolItem = FindPoolItemByName(itemName);
+        var poolItem = FindPoolItem(itemName);
         if (poolItem == null)
         {
             Debug.LogError($"ItemName [{itemName}] not exists in pool");
             return null;
         }
 
-        return Instantiate(poolItem.Prefab);
+        var go = Instantiate(poolItem.Prefab);
+        go.SetActive(false);
+        return go;
     }
 
 
@@ -63,9 +71,16 @@ public class Pool : MonoBehaviour
     }
 
 
-    protected PoolItem FindPoolItemByName(string itemName)
+    protected PoolItem<T> FindPoolItem(string itemName)
     {
-        return _poolItemList.Find(item => item.Name == itemName);
+        return _poolItemList.Find(item => Compare(item.Name, itemName));
     }
 
+    protected PoolItem<T> FindPoolItem(T itemName)
+    {
+        return _poolItemList.Find(item =>  Compare(item.Name, itemName));
+    }
+
+    protected abstract bool Compare(T a, T b);
+    protected abstract bool Compare(T a, string b);
 }

@@ -1,6 +1,8 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour, IFollowable, IDamageable
+public class EnemyManager : MonoBehaviour, IFollowable, IDamageable, IAliveable
 {
     [SerializeField] private GameObject _model;
     [SerializeField] private EnemyAction _action;
@@ -26,16 +28,35 @@ public class EnemyManager : MonoBehaviour, IFollowable, IDamageable
     }
     public bool IsDeath { get; private set; } = false;
 
-
     void OnEnable()
     {
+        IsDeath = false;
         _hp = _maxHP;
+        _bodyCollider.enabled = true;
+        _rightHandCollider.enabled = false;
+        _hpbar.ResetHP(_maxHP);
+        _enemyControl.Agent.baseOffset = 0;
+
+
+        // StartCoroutine(Test());
+        // IEnumerator Test()
+        // {
+        //     while (_hp > 0)
+        //     {
+        //         yield return new WaitForSeconds(1);
+        //         GetHit(10);
+        //     }
+        // }
     }
 
     void Start()
     {
-        _rightHandCollider.enabled = false;
-        _hpbar.ResetHP(_maxHP);
+
+    }
+
+    void OnDisable()
+    {
+
     }
 
     public void GetHit(float damage)
@@ -48,12 +69,31 @@ public class EnemyManager : MonoBehaviour, IFollowable, IDamageable
             IsDeath = true;
             _bodyCollider.enabled = false;
             _rightHandCollider.enabled = false;
+            _enemyControl.Agent.baseOffset = _enemyControl.Agent.height / -2f;
+            _enemyControl.Agent.isStopped = true;
             Action.SetDeath();
+            StartCoroutine(ReleaseAfter(5));
         }
     }
 
     void UpdateHealthBar()
     {
         _hpbar.UpdateHP(_hp);
+    }
+
+    IEnumerator ReleaseAfter(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        Release();
+    }
+
+    public void Release()
+    {
+        EnemyPool.Singleton.Release(this.gameObject);
+    }
+
+    public bool IsAlive()
+    {
+        return !IsDeath;
     }
 }
