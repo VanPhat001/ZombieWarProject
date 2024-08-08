@@ -6,6 +6,7 @@ public class PlayerShoot : MonoBehaviour
 
     [SerializeField] private float _detectRange = 12f;
     [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private Transform _firePoint;
     public bool DetectEnemy { get; private set; } = false;
     private float _timer = 0;
     private float _rate = .3f;
@@ -32,7 +33,8 @@ public class PlayerShoot : MonoBehaviour
 
         DetectEnemy = true;
         _playerManager.Model.rotation = enemy.transform.rotation;
-        _playerManager.Model.Rotate(0, 165, 0);
+        // _playerManager.Model.Rotate(0, 165, 0);
+        _playerManager.Model.Rotate(0, 180, 0);
 
         if (!CanShoot())
         {
@@ -40,6 +42,10 @@ public class PlayerShoot : MonoBehaviour
         }
 
         _timer = _rate;
+        BulletPool.Singleton.Get(BulletPool.BulletName.Bullet, callback: go => {
+            go.transform.position = _firePoint.position;
+            go.transform.rotation = _playerManager.Model.rotation;
+        });
         _playerManager.Anim.SetTrigger("shoot");
     }
 

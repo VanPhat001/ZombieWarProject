@@ -4,6 +4,7 @@ public class BulletPool : Pool<BulletPool.BulletName>
 {
     public enum BulletName
     {
+        Bullet
     }
 
     public static BulletPool Singleton { get; private set; }
