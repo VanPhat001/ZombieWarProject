@@ -20,6 +20,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [SerializeField] private List<WeaponInfo> _weapons;
     [SerializeField] private WeaponName _useWeapon;
+    public WeaponName CurrentWeaponName => _useWeapon;
 
 
 

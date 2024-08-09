@@ -83,4 +83,28 @@ public class PlayerShoot : MonoBehaviour
 
         Gizmos.DrawSphere(this.transform.position, _detectRange);
     }
+
+    public void ThrowGrenade()
+    {
+        // Debug.Log("Throw grenade");
+        AmmoPool.Singleton.Get(AmmoPool.AmmoName.Grenade, callback: go => {
+            var firePoint = _weaponManager.GetCurrentWeapon().FirePoint;
+            go.transform.position = firePoint.position;
+            go.transform.rotation = firePoint.rotation;
+        });
+    }
+
+    public void ChangeWeapon()
+    {
+        switch (_weaponManager.CurrentWeaponName)
+        {
+            case PlayerWeaponManager.WeaponName.M416:
+                _weaponManager.UseWeapon(PlayerWeaponManager.WeaponName.K98);
+                break;
+
+            default:
+                _weaponManager.UseWeapon(PlayerWeaponManager.WeaponName.M416);
+                break;
+        }
+    }
 }

@@ -34,7 +34,7 @@ public abstract class Gun : MonoBehaviour
         }
 
         _shootTimer = _shootRate;
-        BulletPool.Singleton.Get(BulletPool.BulletName.Bullet, callback: go =>
+        AmmoPool.Singleton.Get(AmmoPool.AmmoName.Bullet, callback: go =>
        {
            go.transform.position = FirePoint.position;
            go.transform.rotation = FirePoint.rotation;

@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour
 
     void Release()
     {
-        BulletPool.Singleton.Release(this.gameObject);
+        AmmoPool.Singleton.Release(this.gameObject);
     }
 
 
