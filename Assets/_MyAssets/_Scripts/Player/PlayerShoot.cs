@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -6,10 +7,10 @@ public class PlayerShoot : MonoBehaviour
 
     [SerializeField] private float _detectRange = 12f;
     [SerializeField] private LayerMask _enemyLayer;
-    [SerializeField] private Transform _firePoint;
+    [SerializeField] private Transform _aimPoint;
+    [SerializeField] private Transform _freePoint;
+    [SerializeField] private PlayerWeaponManager _weaponManager;
     public bool DetectEnemy { get; private set; } = false;
-    private float _timer = 0;
-    private float _rate = .3f;
 
     void Start()
     {
@@ -18,7 +19,6 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
-        _timer -= Time.deltaTime;
         AutoShoot();
     }
 
@@ -28,30 +28,22 @@ public class PlayerShoot : MonoBehaviour
         if (enemy == null)
         {
             DetectEnemy = false;
+            _aimPoint.position = _freePoint.position;
             return;
         }
 
         DetectEnemy = true;
         _playerManager.Model.rotation = enemy.transform.rotation;
-        // _playerManager.Model.Rotate(0, 165, 0);
         _playerManager.Model.Rotate(0, 180, 0);
+        _aimPoint.position = enemy.GetComponent<Collider>().bounds.center;
 
-        if (!CanShoot())
+        if (!_weaponManager.GetCurrentWeapon().CanShoot())
         {
             return;
         }
 
-        _timer = _rate;
-        BulletPool.Singleton.Get(BulletPool.BulletName.Bullet, callback: go => {
-            go.transform.position = _firePoint.position;
-            go.transform.rotation = _playerManager.Model.rotation;
-        });
         _playerManager.Anim.SetTrigger("shoot");
-    }
-
-    bool CanShoot()
-    {
-        return _timer <= 0;
+        _weaponManager.GetCurrentWeapon().Shoot();
     }
 
     GameObject DetectNearestEnemy()

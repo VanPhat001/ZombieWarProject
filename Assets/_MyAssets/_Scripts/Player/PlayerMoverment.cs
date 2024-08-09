@@ -44,7 +44,7 @@ public class PlayerMoverment : MonoBehaviour
             _playerManager.Rigid.velocity = velocity * _moveSpeed;
         }
 
-        _playerManager.Anim.SetBool("run", _canMove);
+        _playerManager.Anim.SetBool("runForward", _canMove);
     }
 
     void RotateModelFollowJoystick(Vector2 joystickDirection)

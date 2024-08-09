@@ -16,28 +16,39 @@ public class SpawnManager : MonoBehaviour
     {
         _player = GameObject.Find("Player").transform;
 
-        StartCoroutine(Test());
-        IEnumerator Test()
+        // StartCoroutine(Test());
+        // IEnumerator Test()
+        // {
+        //     while (true)
+        //     {
+        //         if (Time.time < 4 || (22 <= Time.time && Time.time <= 30))
+        //         {
+        //             yield return new WaitForSeconds(1);
+        //             SpawnRandom();
+
+        //             if (Time.time > 30)
+        //             {
+        //                 yield break;
+        //             }
+        //         }
+        //         else
+        //         {
+        //             yield return new WaitForSeconds(.5f);
+        //         }
+        //         // Debug.Log(Time.time);
+        //     }
+
+        // }
+
+
+        StartCoroutine(Test2());
+        IEnumerator Test2()
         {
             while (true)
             {
-                if (Time.time < 4 || (22 <= Time.time && Time.time <= 30))
-                {
-                    yield return new WaitForSeconds(1);
-                    SpawnRandom();
-
-                    if (Time.time > 30)
-                    {
-                        yield break;
-                    }
-                }
-                else
-                {
-                    yield return new WaitForSeconds(.5f);
-                }
-                // Debug.Log(Time.time);
+                yield return new WaitForSeconds(1);
+                SpawnRandom();
             }
-
         }
     }
 
