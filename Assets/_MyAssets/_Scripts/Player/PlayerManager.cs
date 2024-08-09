@@ -33,12 +33,19 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     public void GetHit(float damage)
     {
+        if (HP == 0)
+        {
+            return;
+        }
+        
         HP = Mathf.Clamp(HP - damage, 0, _maxHP);
         UpdateHealthBar();
 
         if (HP <= 0)
         {
             // end game
+            LevelSceneUIManager.Singleton.FinishLayout.OpenLayout();
+            // Time.timeScale = 0;
         }
     }
 

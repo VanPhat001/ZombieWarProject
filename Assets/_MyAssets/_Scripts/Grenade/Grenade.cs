@@ -10,6 +10,7 @@ public class Grenade : MonoBehaviour
     [SerializeField] private float _damage;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private Transform _model;
     [SerializeField] private ParticleSystem _effect;
 
 
@@ -19,6 +20,7 @@ public class Grenade : MonoBehaviour
         _effect.Stop();
 
         _rigidbody.AddForce((this.transform.forward.normalized + this.transform.up.normalized) * _force);
+        _model.gameObject.SetActive(true);
 
         StartCoroutine(ExplosionAfterCoroutine(_explosionAfterSecond));
     }
@@ -38,6 +40,9 @@ public class Grenade : MonoBehaviour
 
     void Explosion()
     {
+        // invisible grenade model
+        _model.gameObject.SetActive(false);
+
         // play effect
         _effect.time = 0;
         _effect.Play();

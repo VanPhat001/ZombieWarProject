@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour
         {
             while (true)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(1f / 5);
                 SpawnRandom();
             }
         }
