@@ -3551,7 +3551,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1513843258}
-  - component: {fileID: 1513843257}
+  - component: {fileID: 1513843259}
   m_Layer: 0
   m_Name: Spawn Manager
   m_TagString: Untagged
@@ -3559,23 +3559,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1513843257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1513843256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd30ffea93fad4c4b9c541bdf240eca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnPoints:
-  - {fileID: 795956871}
-  - {fileID: 1706186761}
-  - {fileID: 1035391743}
-  - {fileID: 254077210}
 --- !u!4 &1513843258
 Transform:
   m_ObjectHideFlags: 0
@@ -3592,6 +3575,23 @@ Transform:
   - {fileID: 420123715}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1513843259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513843256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25b97c85ab8b419ba07f94c94ebea5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPoints:
+  - {fileID: 795956871}
+  - {fileID: 1706186761}
+  - {fileID: 1035391743}
+  - {fileID: 254077210}
 --- !u!1 &1564988230
 GameObject:
   m_ObjectHideFlags: 0
@@ -5032,7 +5032,7 @@ SceneRoots:
   - {fileID: 1315184907}
   - {fileID: 907044418}
   - {fileID: 673614202}
-  - {fileID: 1513843258}
   - {fileID: 1676688811}
   - {fileID: 53803923}
   - {fileID: 1604656881}
+  - {fileID: 1513843258}

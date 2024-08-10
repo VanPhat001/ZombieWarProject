@@ -17,7 +17,7 @@ public class TopDownEffect : MonoBehaviour
             onComplete = () => { };
         }
         this.transform.localPosition = Vector3.up * Screen.height;
-        this.transform.LeanMoveLocalY(_yPos, .3f).setEaseInExpo().setOnComplete(onComplete);
+        this.transform.LeanMoveLocalY(_yPos, .4f).setEaseInExpo().setOnComplete(onComplete);
     }
 
     public void Disappear(Action onComplete = null)
@@ -26,6 +26,6 @@ public class TopDownEffect : MonoBehaviour
         {
             onComplete = () => { };
         }
-        this.transform.LeanMoveLocalY(Screen.height, .3f).setEaseOutExpo().setOnComplete(onComplete);
+        this.transform.LeanMoveLocalY(Screen.height, .4f).setEaseOutExpo().setOnComplete(onComplete);
     }
 }
