@@ -14,6 +14,10 @@ public class EnemyManager : MonoBehaviour, IFollowable, IDamageable, IAliveable
     [SerializeField] private HPBar _hpbar;
     [SerializeField] private float _maxHP = 100f;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip _deathSound;
+    [SerializeField] private AudioSource _audioSource;
+
     [Header("Collider")]
     [SerializeField] private Collider _bodyCollider;
     [SerializeField] private Collider _rightHandCollider;
@@ -71,9 +75,15 @@ public class EnemyManager : MonoBehaviour, IFollowable, IDamageable, IAliveable
             _rightHandCollider.enabled = false;
             _enemyControl.Agent.baseOffset = _enemyControl.Agent.height / -2f;
             _enemyControl.Agent.isStopped = true;
+            PlayDeathSound();
             Action.SetDeath();
             StartCoroutine(ReleaseAfter(5));
         }
+    }
+
+    void PlayDeathSound()
+    {
+        _audioSource.PlayOneShot(_deathSound);
     }
 
     void UpdateHealthBar()

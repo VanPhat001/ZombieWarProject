@@ -19,6 +19,11 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
+        if (_playerManager.HP <= 0)
+        {
+            return;
+        }
+        
         AutoShoot();
     }
 

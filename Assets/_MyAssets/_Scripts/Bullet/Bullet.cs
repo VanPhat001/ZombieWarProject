@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _damage = 50;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private LayerMask _playerLayer;
+    [SerializeField] private AudioClip _explosionSound;
+    [SerializeField] private AudioSource _audioSource;
 
     void OnEnable()
     {
@@ -18,6 +20,11 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
+    }
+
+    void PlayeExplosionSound()
+    {
+        _audioSource.PlayOneShot(_explosionSound);
     }
 
     IEnumerator ReleaseAfterCoroutine(float sec)

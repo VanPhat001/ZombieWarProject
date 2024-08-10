@@ -12,6 +12,8 @@ public class Grenade : MonoBehaviour
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Transform _model;
     [SerializeField] private ParticleSystem _effect;
+    [SerializeField] private AudioClip _explosionSound;
+    [SerializeField] private AudioSource _audioSource;
 
 
     void OnEnable()
@@ -40,15 +42,9 @@ public class Grenade : MonoBehaviour
 
     void Explosion()
     {
-        // invisible grenade model
         _model.gameObject.SetActive(false);
-
-        // play effect
-        _effect.time = 0;
-        _effect.Play();
-
-        // play sound
-        //
+        PlayExplosionEffect();
+        PlayExplosionSound();
 
         // collision range - 1 enemy have many collider
         var colliders = Physics.OverlapSphere(this.transform.position, _explosionRadius, _enemyLayer.value);
@@ -67,6 +63,17 @@ public class Grenade : MonoBehaviour
         {
             item.GetComponent<IDamageable>()?.GetHit(_damage);
         }
+    }
+
+    private void PlayExplosionEffect()
+    {
+        _effect.time = 0;
+        _effect.Play();
+    }
+
+    void PlayExplosionSound()
+    {
+        _audioSource.PlayOneShot(_explosionSound);
     }
 
     void Release()

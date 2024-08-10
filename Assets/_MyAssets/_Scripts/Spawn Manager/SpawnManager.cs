@@ -6,10 +6,12 @@ public abstract class SpawnManager : MonoBehaviour
 {
     [SerializeField] protected List<Transform> _spawnPoints;
     protected Transform _player;
+    protected PlayerManager _playerManager;
 
     protected virtual void Awake()
     {
         _player = GameObject.Find("Player").transform;
+        _playerManager = _player.GetComponent<PlayerManager>();
     }
 
     protected virtual void OnEnable()

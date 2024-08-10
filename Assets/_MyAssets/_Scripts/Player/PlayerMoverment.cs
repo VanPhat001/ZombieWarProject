@@ -15,6 +15,11 @@ public class PlayerMoverment : MonoBehaviour
 
     void Update()
     {
+        if (_playerManager.HP <= 0)
+        {
+            return;
+        }
+
         _direction = InputManager.Singleton.JoystickDirection;
 
         Move();

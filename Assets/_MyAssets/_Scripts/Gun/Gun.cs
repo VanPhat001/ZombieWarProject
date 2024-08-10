@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public abstract class Gun : MonoBehaviour
@@ -7,6 +6,8 @@ public abstract class Gun : MonoBehaviour
     [SerializeField] protected Transform _firePoint;
     public Transform FirePoint => _firePoint;
     [SerializeField] protected ParticleSystem _effect;
+    [SerializeField] protected AudioClip _fireSound;
+    [SerializeField] protected AudioSource _audioSource;
     [SerializeField] protected float _shootRate;
     protected float _shootTimer = 0;
 
@@ -17,10 +18,14 @@ public abstract class Gun : MonoBehaviour
         _effect.Stop();
     }
 
-
     protected virtual void Update()
     {
         _shootTimer -= Time.deltaTime;
+    }
+
+    protected virtual void OnDisable()
+    {
+        StopFireEffect();
     }
 
 
@@ -38,8 +43,8 @@ public abstract class Gun : MonoBehaviour
         }
 
         _shootTimer = _shootRate;
-        _effect.time = 0;
-        _effect.Play();
+        PlayFireEffect();
+        PlayFireSound();
         StartCoroutine(StopEffectAfter(_shootRate / 3f));
         AmmoPool.Singleton.Get(AmmoPool.AmmoName.Bullet, callback: go =>
        {
@@ -48,9 +53,25 @@ public abstract class Gun : MonoBehaviour
        });
     }
 
+    void PlayFireEffect()
+    {
+        _effect.time = 0;
+        _effect.Play();
+    }
+
+    void StopFireEffect()
+    {
+        _effect.Stop();
+    }
+
+    void PlayFireSound()
+    {
+        _audioSource.PlayOneShot(_fireSound);
+    }
+
     IEnumerator StopEffectAfter(float sec)
     {
         yield return new WaitForSeconds(sec);
-        _effect.Stop();
+        StopFireEffect();
     }
 }
