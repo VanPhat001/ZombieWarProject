@@ -413,6 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3cbeefe7960c48c78fbcbad88137d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _button: {fileID: 0}
   _image: {fileID: 0}
 --- !u!4 &789594615
 Transform:

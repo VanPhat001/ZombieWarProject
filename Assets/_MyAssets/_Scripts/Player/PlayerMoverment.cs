@@ -6,7 +6,7 @@ public class PlayerMoverment : MonoBehaviour
     private PlayerManager _playerManager;
     private Vector2 _direction;
     private bool _canMove = false;
-    
+
 
     void Start()
     {
@@ -40,8 +40,13 @@ public class PlayerMoverment : MonoBehaviour
         _canMove = _direction != Vector2.zero;
         if (_canMove)
         {
-            var velocity = Vector3.forward * _direction.y + Vector3.right * _direction.x;
-            _playerManager.Rigid.velocity = velocity * _moveSpeed;
+            // var velocity = Vector3.forward * _direction.y + Vector3.right * _direction.x;
+            // _playerManager.Rigid.velocity = velocity * _moveSpeed;
+            _playerManager.Rigid.velocity = new Vector3(
+                _direction.x * _moveSpeed,
+                _playerManager.Rigid.velocity.y,
+                _direction.y * _moveSpeed
+            );
         }
 
         _playerManager.Anim.SetBool("runForward", _canMove);
