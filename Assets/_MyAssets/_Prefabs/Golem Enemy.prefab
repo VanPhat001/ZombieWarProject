@@ -380,7 +380,7 @@ MonoBehaviour:
   _target: {fileID: 0}
   _hpbar: {fileID: 5076668918635959238}
   _maxHP: 300
-  _deathSound: {fileID: 8300000, guid: 97fc76ad1352f4a279f73a8121ec6b41, type: 3}
+  _deathSound: {fileID: 8300000, guid: 0dc6de9bcefc642e990e560765e10329, type: 3}
   _audioSource: {fileID: 7742388861961636013}
   _bodyCollider: {fileID: 3914548014451581348}
   _headCollider: {fileID: 4782161585406042029}
