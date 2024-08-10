@@ -104,6 +104,8 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 0
+  _explosionSound: {fileID: 0}
+  _audioSource: {fileID: 0}
 --- !u!1 &2967877085933680574
 GameObject:
   m_ObjectHideFlags: 0

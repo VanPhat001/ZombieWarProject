@@ -6,7 +6,8 @@ public class EnemyPool : Pool<EnemyPool.EnemyName>
 
     public enum EnemyName
     {
-        BH_2
+        BH_2,
+        Golem
     }
 
     void Awake()

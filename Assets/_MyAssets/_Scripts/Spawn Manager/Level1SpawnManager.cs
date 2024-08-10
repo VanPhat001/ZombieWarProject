@@ -3,7 +3,7 @@ using UnityEngine;
 public class Level1SpawnManager : SpawnManager
 {
     private float _decreaseRate = .95f; // 95%
-    private float _currentInterval = 6f; // second
+    private float _currentInterval = 8f; // second
     private float _minInterval = .4f;
     private float _startDelay = 2f;
     private float _timer = 0;

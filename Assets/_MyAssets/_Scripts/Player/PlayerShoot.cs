@@ -38,7 +38,9 @@ public class PlayerShoot : MonoBehaviour
         }
 
         DetectEnemy = true;
-        _playerManager.Model.rotation = enemy.transform.rotation;
+        var root = enemy.transform.root;
+        var model = root.GetChild(0);
+        _playerManager.Model.rotation = model.rotation;
         _playerManager.Model.Rotate(0, 180, 0);
         _aimPoint.position = enemy.GetComponent<Collider>().bounds.center;
 
@@ -64,12 +66,12 @@ public class PlayerShoot : MonoBehaviour
         foreach (var collider in colliders)
         {
             // Debug.Log(collider.transform.name);
-            if (!collider.transform.parent.TryGetComponent<IAliveable>(out var comp) || !comp.IsAlive())
+            if (!collider.transform.root.TryGetComponent<IAliveable>(out var comp) || !comp.IsAlive())
             {
                 continue;
             }
 
-            var d = Vector3.Distance(this.transform.position, collider.transform.position);
+            var d = Vector3.Distance(this.transform.position, collider.transform.root.position);
             if (minRange > d)
             {
                 minRange = d;
